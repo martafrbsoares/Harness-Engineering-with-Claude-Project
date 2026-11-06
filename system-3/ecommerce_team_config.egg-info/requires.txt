@@ -1,0 +1,8 @@
+pathspec>=0.12
+pyyaml>=6.0
+
+[dev]
+pytest>=8
+mypy>=1.10
+ruff>=0.5
+types-PyYAML>=6.0

@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: ecommerce-team-config
+Version: 0.1.0
+Summary: Validator for the e-commerce team's Claude Code configuration (CLAUDE.md hierarchy, path-scoped rules, commands, skills)
+Requires-Python: >=3.11
+Requires-Dist: pathspec>=0.12
+Requires-Dist: pyyaml>=6.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: mypy>=1.10; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+Requires-Dist: types-PyYAML>=6.0; extra == "dev"

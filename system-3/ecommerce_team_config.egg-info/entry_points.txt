@@ -1,0 +1,2 @@
+[console_scripts]
+ecommerce-team-config = ecommerce_team_config.__main__:main
