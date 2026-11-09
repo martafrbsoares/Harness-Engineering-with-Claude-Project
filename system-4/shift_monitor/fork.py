@@ -33,3 +33,26 @@ def merge_findings(scratchpad_paths: Iterable[Path], main_scratchpad: Path) -> N
             continue
         for entry in Scratchpad(path).read():
             main.append(entry)
+
+
+# What a fork copies:
+
+# fork_for_hypothesis creates forks_root/<hypothesis_id>.
+# It then uses shutil.copyfile to copy the base  hot_state.json  into that folder as a byte-for-byte copy.
+# Nothing else is copied. The test  test_fork_for_hypothesis_copies_state_without_mutating_base asserts the fork's
+# hot_state.json bytes equal the base bytes.
+
+# Where it writes its own scratchpad:
+
+# fork.py doesn't create a scratchpad itself. The caller opens Scratchpad(fork_dir / "scratchpad.jsonl"),
+# so each fork writes to forks_root/<id>/scratchpad.jsonl.
+# test_two_forks_produce_independent_scratchpads checks that H1's path is forks/H1/scratchpad.jsonl and H2's is 
+# forks/H2/scratchpad.jsonl. It also checks that neither fork's entries show up in the other's file.
+
+# Why the base stays unchanged until merge:
+
+# • Forks only read the base file when copying it. All later writes go to the fork's own copy and its own scratchpad.
+# • The base file is untouched: the first test asserts base.read_bytes() == base_bytes, and the second records
+# base_bytes_before  as well.
+# • The only code that writes back is merge_findings. It reads each fork's scratchpad and appends those entries
+# to the main scratchpad. Until it's called, nothing a fork records reaches the main scratchpad.
